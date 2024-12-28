@@ -90,9 +90,7 @@ function QuizProvider({ children }) {
   }, 0);
 
   useEffect(() => {
-    fetch(
-      "http://localhost:8000/questions"
-    )
+    fetch("http://localhost:8000/questions")
       .then((res) => res.json())
       .then((data) => dispatch({ type: "dataReceived", payload: data }))
       .catch(() => dispatch({ type: "dataFailed" }));
@@ -109,7 +107,7 @@ function QuizProvider({ children }) {
         secondsRemaining,
         numQuestions,
         maxPossiblePoints,
-        dispatch
+        dispatch,
       }}
     >
       {children}

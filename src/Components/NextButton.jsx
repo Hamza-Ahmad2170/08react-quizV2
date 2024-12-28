@@ -3,7 +3,7 @@ import useQuiz from "../hooks/useQuiz";
 function NextButton() {
   const { dispatch, answer, numQuestions, index } = useQuiz();
 
-  if (!answer) return;
+  if (answer === null || answer === undefined) return;
 
   if (index < numQuestions - 1)
     return (
