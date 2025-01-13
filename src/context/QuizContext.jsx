@@ -89,10 +89,26 @@ function QuizProvider({ children }) {
     return preValue + currValue.points;
   }, 0);
 
+  function fetchData() {
+    if (!import.meta.env.MODE === "development") {
+      return fetch("http://localhost:8000/questions");
+    }
+    return fetch(import.meta.env.VITE_NPOINT_URL);
+  }
+
   useEffect(() => {
-    fetch("http://localhost:8000/questions")
+    fetchData()
       .then((res) => res.json())
-      .then((data) => dispatch({ type: "dataReceived", payload: data }))
+      .then((data) => {
+        if (!import.meta.env.MODE === "development") {
+          return dispatch({ type: "dataReceived", payload: data });
+        }
+
+        return dispatch({
+          type: "dataReceived",
+          payload: data.questions,
+        });
+      })
       .catch(() => dispatch({ type: "dataFailed" }));
   }, []);
   return (
